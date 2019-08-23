@@ -71,5 +71,25 @@ RSpec.describe Employee, type: :model do
         expect(result.any? {|employee| employee.first_name == "one" }).to be(false)
       end
     end
-  end   
+  end 
+  context "instance methods" do 
+    let(:employee) { make_employee }      
+    describe "#full_name" do 
+      it "concatinates the first and last name" do
+        expect(employee.full_name).to eq "#{Tfname} #{Tlname}"
+      end
+    end
+    describe "#can_afford?" do 
+      before do
+        employee.rewards_balance = 100
+      end
+      it "returns true if the rewards_balance is greater than or equal to the arg" do
+        expect(employee.can_afford? 50).to eq(true)
+      end
+      it "returns false if the rewards_balance is less than the arg" do
+        expect(employee.can_afford? 500).to eq(false)
+      end      
+    end
+
+  end 
 end
